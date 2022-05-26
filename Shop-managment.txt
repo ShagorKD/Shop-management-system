@@ -1,0 +1,244 @@
+CREATE DATABASE fakirhat_super_shop;
+
+queries for creating tables with attribuites:
+------------------------------------------------------
+
+
+CREATE TABLE customer(
+   
+    name varchar(255) NOT null,
+    id int NOT null PRIMARY KEY,
+    nid int UNIQUE NOT null,
+    address varchar(255) not null,
+    contact_no varchar(255) UNIQUE NOT null
+    
+    );
+insert values into customer:
+________________________________________________________________
+
+INSERT INTO customer(name, id,nid,address,contact_no)
+VALUES('Sojib',101,123456,'Nator','01728382133');
+INSERT INTO customer(name,id,nid,address,contact_no)
+VALUES('Roni',102,123654,'Mohammadpur Housing','01628381233'),
+       ('Joni',103,213456,'Lalmatia-B-3','01526214491'),
+       ('Mutalab',104,654321,'Sankar','01615292399'),
+       ('Shanto',105,567890,'Kaderabadh Housing','01674863291'),
+       ('Samia',106,456789,'Dhanmondi-15','01555466981'),
+       ('Ferdouse',107,234567,'Kalabagan','01678945632'),
+       ('Raju',108,987654,'Samoli','01544496325'),
+       ('Rokeya',109,789654,'Lalmatia-B-4','01741285369'),
+       ('Shakib',110,987234,'Satmasjid Road','01612345698'),
+       ('Sweety',111,596471,'Jigatola','01785225852'),
+       ('Abbas',112,918273,'Mohammadpur Housing','01614774114'),
+       ('Kuddus',113,963123,'Dhanmondi-27','01771471444'),
+       ('Monisa',114,852258,'Dhanmondi-15','01745645665'),
+       ('Tasnim',115,789753,'Jigatola','01558528552');
+______________________________________________________________________________________________
+
+
+CREATE TABLE employee(
+    name varchar(255) NOT null,
+    id int PRIMARY KEY UTO INCREMENT,
+    nid int UNIQUE NOT null,
+    joining_date DATE,
+    salary int NOT null,
+    contact_no varchar(11) not null UNIQUE,
+    address varchar(255) not null,
+    designation varchar(255) NOT null
+
+
+
+);
+
+insert values into employee:
+---------------------------------
+INSERT INTO employee(name,id,nid,joining_date,salary,contact_no,address,designation)
+values('Fakur',501,159623,'2018-05-05',7500,'01776212449','Barishal','Sales Executive'),
+      ('Rosy',null,159632,'2018-07-02',7500,'01776214944','Noakhali','Sales Executive');
+INSERT INTO employee(name,id,nid,joining_date,salary,contact_no,address,designation)
+values('Riya',null,159624,'2018-05-05',7500,'01776212400','Dhaka','Sales Executive'),
+      ('Rimi',null,159635,'2018-05-02',7500,'01776214955','Dhaka','Sales Executive'),
+      ('Toma',null,156565,'2017-09-04',9500,'01765121944','Narayanganj','Accountant'),
+      ('Touhidul',null,164556,'2017-05-03',10500,'01628382133','Bagerhat','Manager');
+INSERT INTO employee(name,id,nid,joining_date,salary,contact_no,address,designation)
+VALUES('Shattar',null,145003,'2022-01-01','4500','01700022233','Bola','Cleaner');
+
+_____________________________________________________________________________________________________________
+      
+CREATE TABLE product(
+    name varchar(255) not null,
+    id int NOT null PRIMARY key AUTO_INCREMENT,
+    type varchar(255) not null,
+    companyName varchar(255) not null,
+    exp_date date,
+    mgf_date date,
+    bar_code int not null  UNIQUE ,
+    price varchar(255) not null
+    
+    
+    
+    );
+
+insert values into product table:
+-----------------------------------------
+INSERT INTO product(
+    name,id,type,companyName,exp_date,mgf_date,bar_code,price)
+   VALUES('7up(600ml)',100,'Beverage','PepsiCo','2022-06-01','2022-03-01',1234,'35.00'),
+         ('7up(1.25ltr)',null,'Beverage','PepsiCo','2022-06-01','2022-03-01',1235,'60.00'),
+          ('7up(2.25ltr)',null,'Beverage','PepsiCo','2022-06-01','2022-03-01',1236,'110.00'),
+           ('Mountain Dew (600ml)',null,'Beverage','PepsiCo','2022-06-05','2022-04-05',1237,'35.00'),
+             ('Speed (250ml)',null,'Beverage','Akij Food and Beverage Ltd (AFBL)','2022-05-05','2022-04-05',1238,'35.00'),
+             ('Rupchanda(2 ltr)',null,'Soyabean Oil','Indian Adani Wilmar Ltd','2022-12-31','2022-01-01',4321,'286.00'),
+              ('Fresh(5 ltr)',null,'Soyabean Oil','Edible Oil','2022-12-31','2022-01-01',4322,'728.00'),
+              ('Chashi Aromatic Chinigura Rice(1 kg)',null,'Rice','Square','2022-09-03','2022-03-03',5431,'130.00'),
+              ('Chashi Aromatic Chinigura Rice(5 kg)',null,'Rice','Square','2022-10-03','2022-04-03',5432,'630.00'),
+              ('Aarong Dairy(1 ltr)',null,'Dairy Milk','Arong','2022-04-25','2022-04-18',6541,'75.00'),
+               ('Aarong Dairy(500 ml)',null,'Dairy Milk','Arong','2022-04-25','2022-04-18',6542,'40.00');
+             
+--------------------------------------------------------------------------------------------------------------------
+
+
+CREATE TABLE receipt(
+    transaction_no int not null PRIMARY KEY AUTO_INCREMENT,
+    product_name varchar(255) not null,
+    quantity DOUBLE(10,2) not null,
+    cashier_name varchar(20) NOT null,
+    total_amount varchar(255) not null,
+    
+    time_ datetime not null DEFAULT CURRENT_TIMESTAMP(),
+    product_id int not null,
+    customer_id int not null,
+    FOREIGN key(product_id) REFERENCES product(id),
+    FOREIGN key(customer_id) REFERENCES customer(id)
+    
+    );
+---------------------
+insert values into recipt table:
+__________________________________________
+INSERT INTO receipt(
+    transaction_no,product_name,quantity,cashier_name,total_amount,product_id,customer_id)
+    VALUES(1,'7up',1,'Toma','35.00',100,107);
+INSERT INTO receipt(transaction_no,product_name,quantity,cashier_name,total_amount,product_id,customer_id)values
+(null,'Chashi Aromatic Chinigura Rice',1,'Toma','130.00',107,107);
+INSERT INTO receipt(transaction_no,product_name,quantity,cashier_name,total_amount,product_id,customer_id)values
+(null,'Chashi Aromatic Chinigura Rice',1,'Toma','630.00',108,115);
+INSERT INTO receipt(transaction_no,product_name,quantity,cashier_name,total_amount,product_id,customer_id)values
+(null,'Speed',1,'Toma','25.00',104,111);
+INSERT INTO receipt(transaction_no,product_name,quantity,cashier_name,total_amount,product_id,customer_id)values
+(null,'Speed',4,'Toma','100.00',104,109);
+INSERT INTO receipt(transaction_no,product_name,quantity,cashier_name,total_amount,product_id,customer_id)
+values(null,'Fresh(5ltr)',2,'Toma','1450',106,111),
+      (null,'Aarong Dairy(1ltr)',2,'Toma','150',109,115);
+    
+
+
+
+------------------------------------------------------------------------------
+
+CREATE TABLE suplier(
+    supplier_name varchar(255) not null,
+    id int not null PRIMARY KEY AUTO_INCREMENT,
+    address varchar(255) not null,
+    contact_no varchar(255) not null
+   
+    
+    );
+
+insert values into suplier:
+_______________________________________
+INSERT INTO suplier(supplier_name,id,address,contact_no)
+VALUES('RR Enterprise',901,'Gazipur','01345678947'),
+       ('Arong',null,'Dhaka','01396336963'),
+       ('SKD Traders',null,'Khulna','01772621944'),
+       ('Meghna LTD',null,'Narayangang','0137415983'),
+       ('RPG Trade',null,'Mymenshing','01385245675');
+____________________________________________________________________________________________________
+
+CREATE TABLE order_list(
+    order_id int not null PRIMARY KEY,
+    order_date date,
+    delivery_date date,
+    suplier_id int not null,
+    product_id int not null,
+    FOREIGN KEY(suplier_id) REFERENCES suplier(id),
+    FOREIGN KEY(product_id) REFERENCES product(id)
+    );
+
+insert values into orderlist:
+--------------------------------------------------------
+INSERT INTO order_list( 
+    order_id,order_date,delivery_date,suplier_id,product_id
+
+)
+VALUES(10001,'2022-02-01','2022-02-05',904,105);
+INSERT INTO order_list(
+    order_id,order_date,delivery_date,suplier_id,product_id)
+    VALUES(null,'2022-03-05','2022-03-10',901,100),
+           (null,'2022-03-05','2022-03-10',901,101),
+           (null,'2022-03-05','2022-03-10',901,102),
+           (null,'2022-04-05','2022-04-10',903,104),
+           (null,'2022-03-05','2022-03-12',905,107);
+
+
+
+
+
+
+
+
+
+
+
+
+
+queries and subqueries:
+-------------------------------------
+1)for 2nd highest max salary:
+SELECT MAX(salary)AS salary FROM employee WHERE salary < (SELECT MAX(salary) FROM employee); // out put:9500
+
+2)for total sale:
+SELECT SUM(total_amount) as totalSale FROM receipt; //1336
+
+3)sum of products and sales:
+-------------------------------
+SELECT SUM(total_amount).price , COUNT(product_id).products FROM receipt WHERE product_name='Speed';
+
+4)which customer bought max amount of product:
+right join between recipt and customer:
+----------------------------------------------------------
+SELECT max(total_amount) as price, name from receipt RIGHT JOIN customer ON (receipt.customer_id=customer.id);// price=630 && name = Sojib
+
+5)how many product :
+-----------------------
+SELECT type AS producttype, COUNT(type) as product FROM product GROUP BY type;
+
+6)selected products of required quantity and their total amount of money:
+------------------------------------------------
+SELECT product_name,COUNT(quantity) AS product_,SUM(total_amount) from receipt GROUP BY product_name;
+
+7)which product has been ordered from which supplier:
+------------------------------------------------------------------------------------------
+SELECT order_id,supplier_name,product_id FROM order_list RIGHT OUTER JOIN suplier on(order_list.suplier_id=suplier.id);
+
+8)3rd or nth highest salary (using limit)
+------------------------------------------------------------
+SELECT salary,designation FROM employee ORDER BY salary DESC LIMIT 3,1;
+
+9)which area contain how many number of people:
+----------------------------------------------------
+SELECT address , count(id) AS number_of_people FROM customer GROUP BY address;
+
+10) display the name of customers who has not made any purchase yet:
+-------------------------------------------------------------------------
+SELECT name as customerName, id as customer_id FROM customer WHERE not EXISTS(select * FROM receipt WHERE customer.id=receipt.customer_id);
+
+11)name of product,,ordering date,delivery date, supplier name ,supplier address and supplier contact:
+-------------------------------------------------------------------------------------------------------------
+
+SELECT product.name,product.price, order_list.order_date,order_list.delivery_date,suplier.supplier_name,suplier.address,suplier.contact_no
+FROM ((product RIGHT JOIN order_list ON product.id=order_list.product_id)RIGHT JOIN suplier ON order_list.suplier_id=suplier.id);
+
+
+12)search a name from a table :
+------------------------------------
+SELECT name AS customer_name FROM customer WHERE name LIKE '%Tasnim%';
